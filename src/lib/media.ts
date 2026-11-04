@@ -10,7 +10,8 @@ import { imageSize } from "image-size";
  */
 const IMAGE_EXT = ["webp", "png", "jpg", "jpeg"];
 
-export type LogoAsset = { src: string; width: number; height: number };
+export type ImageAsset = { src: string; width: number; height: number };
+export type LogoAsset = ImageAsset;
 
 export type SiteMedia = {
   logo: LogoAsset | null;
@@ -19,7 +20,7 @@ export type SiteMedia = {
     | { kind: "image"; src: string }
     | { kind: "video"; sources: { src: string; type: string }[]; poster: string | null }
     | null;
-  gallery: string[];
+  gallery: ImageAsset[];
 };
 
 const IMAGES_DIR = path.join(process.cwd(), "public", "images");
@@ -55,16 +56,21 @@ function findByBase(files: string[], base: string, extensions: string[]) {
   return null;
 }
 
-function readLogo(files: string[]): LogoAsset | null {
-  const file = findByBase(files, "logo", ["png", "webp", "jpg", "jpeg"]);
-  if (!file) return null;
+/** Real displayed size, honouring EXIF rotation. Null for an unreadable file, so it is never shown broken. */
+function readAsset(file: string): ImageAsset | null {
   try {
-    const { width, height } = imageSize(fs.readFileSync(path.join(IMAGES_DIR, file)));
+    const { width, height, orientation } = imageSize(fs.readFileSync(path.join(IMAGES_DIR, file)));
     if (!width || !height) return null;
-    return { src: url(file), width, height };
+    const rotated = orientation !== undefined && orientation >= 5;
+    return { src: url(file), width: rotated ? height : width, height: rotated ? width : height };
   } catch {
     return null;
   }
+}
+
+function readLogo(files: string[]): LogoAsset | null {
+  const file = findByBase(files, "logo", ["png", "webp", "jpg", "jpeg"]);
+  return file ? readAsset(file) : null;
 }
 
 export function getSiteMedia(): SiteMedia {
@@ -93,7 +99,8 @@ export function getSiteMedia(): SiteMedia {
     .map((file) => ({ file, match: /^image(\d+)$/.exec(baseOf(file)) }))
     .filter((f) => f.match && IMAGE_EXT.includes(extOf(f.file)))
     .sort((a, b) => Number(a.match![1]) - Number(b.match![1]))
-    .map((f) => url(f.file));
+    .map((f) => readAsset(f.file))
+    .filter((asset): asset is ImageAsset => asset !== null);
 
   return { logo: readLogo(files), mainPage: mainPage ? url(mainPage) : null, aboutMedia, gallery };
 }

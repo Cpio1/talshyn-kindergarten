@@ -50,7 +50,7 @@ export function MobileHero() {
           <div className="blob-b absolute -bottom-2.5 -right-2 h-3/4 w-3/5 bg-leaf" />
           <div className="absolute -left-2 -top-3 h-14 w-14 rounded-full bg-sun" />
           <div className="relative aspect-[4/3] max-h-[19rem] w-full overflow-hidden rounded-[2rem_2rem_2rem_0.9rem] bg-sand shadow-lift ring-4 ring-milk">
-            <HeroPhoto sizes="(max-width: 767px) 92vw, 1px" priority />
+            <HeroPhoto sizes="(max-width: 767px) 92vw, 1px" media="(max-width: 767px)" />
           </div>
           <div className="absolute -bottom-4 left-3 flex items-center gap-2 rounded-xl bg-white px-2.5 py-1.5 shadow-lift">
             <Clock className="h-4 w-4 text-leaf" aria-hidden="true" />

@@ -96,7 +96,7 @@ export function Hero() {
           <WillowBranch className="animate-sway absolute -left-12 -top-14 z-[2] h-48 w-28 origin-top text-forest lg:-left-16 lg:h-56 lg:w-32" />
 
           <div className="blob-a group relative z-[1] aspect-[5/5.6] max-h-[34rem] overflow-hidden bg-sand shadow-lift ring-[6px] ring-milk">
-            <HeroPhoto sizes="(max-width: 767px) 1px, (min-width: 1280px) 480px, 42vw" priority />
+            <HeroPhoto sizes="(max-width: 767px) 1px, (min-width: 1280px) 480px, 42vw" media="(min-width: 768px)" />
           </div>
 
           <Daisy className="absolute -right-3 bottom-16 z-[2] h-12 w-12 drop-shadow-sm" />

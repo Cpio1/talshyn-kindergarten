@@ -1,23 +1,32 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "motion/react";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { GalleryEmpty } from "@/components/shared/GalleryEmpty";
+import { pairedRows } from "@/components/shared/galleryLayout";
 import { Lightbox } from "@/components/shared/Lightbox";
-import { StaggerItem } from "@/components/shared/Reveal";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { useLanguage, useMedia } from "@/components/shared/Providers";
 
 const INITIAL = 4;
 
-/** Wide tiles alternating with pairs of squares. Swipe works in the lightbox. */
+/** Two compact columns. Tiles keep each photo's own proportions; swipe works in the lightbox. */
 export function MobileGallery() {
   const { t } = useLanguage();
   const { gallery } = useMedia();
   const [expanded, setExpanded] = useState(false);
   const [open, setOpen] = useState<number | null>(null);
-  const visible = expanded ? gallery : gallery.slice(0, INITIAL);
+  const listRef = useRef<HTMLDivElement>(null);
+  const rows = pairedRows(expanded ? gallery : gallery.slice(0, INITIAL));
+
+  function showMore() {
+    setExpanded(true);
+    requestAnimationFrame(() => {
+      listRef.current?.querySelectorAll("button")[INITIAL]?.focus({ preventScroll: true });
+    });
+  }
 
   return (
     <div className="px-4 py-10 sm:px-6">
@@ -29,45 +38,45 @@ export function MobileGallery() {
           </div>
         ) : (
           <>
-            <ul className="mt-6 grid grid-cols-2 gap-2">
-              {visible.map((src, i) => {
-                // every third tile is wide; a lone square at the end is widened too, so no gaps
-                const lead = i % 3 === 0 || (i === visible.length - 1 && i % 3 === 1);
-                return (
-                  <StaggerItem
-                    key={src}
-                    index={i % INITIAL}
-                    y={10}
-                    step={0.05}
-                    className={`relative overflow-hidden bg-sand ${
-                      lead ? "col-span-2 aspect-[16/10] rounded-[1.6rem]" : "aspect-square rounded-[1.25rem]"
-                    }`}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setOpen(i)}
-                      aria-label={t.gallery.open(i + 1)}
-                      className="absolute inset-0 h-full w-full rounded-[inherit]"
+            <div ref={listRef} className="mt-6 grid gap-2">
+              {rows.map((row) => (
+                <ul key={row.tiles[0].index} className="flex gap-2">
+                  {row.tiles.map(({ image, index, ratio }, position) => (
+                    <motion.li
+                      key={image.src}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.15 }}
+                      transition={{ duration: 0.4, delay: position * 0.05 }}
+                      className="relative min-w-0 overflow-hidden rounded-[1.25rem] bg-sand"
+                      style={{ flex: `${ratio} 1 0%`, aspectRatio: ratio }}
                     >
-                      <Image
-                        src={src}
-                        alt={t.gallery.photoAlt(i + 1)}
-                        fill
-                        sizes={lead ? "(max-width: 767px) 92vw, 1px" : "(max-width: 767px) 46vw, 1px"}
-                        className="object-cover"
-                      />
-                    </button>
-                  </StaggerItem>
-                );
-              })}
-            </ul>
+                      <button
+                        type="button"
+                        onClick={() => setOpen(index)}
+                        aria-label={t.gallery.open(index + 1)}
+                        className="absolute inset-0 h-full w-full rounded-[inherit]"
+                      >
+                        <Image
+                          src={image.src}
+                          alt={t.gallery.photoAlt(index + 1)}
+                          fill
+                          sizes={`(max-width: 767px) ${Math.round((ratio / row.ratioSum) * 92)}vw, 1px`}
+                          className="object-cover"
+                        />
+                      </button>
+                    </motion.li>
+                  ))}
+                </ul>
+              ))}
+            </div>
             {!expanded && gallery.length > INITIAL && (
-              <button type="button" onClick={() => setExpanded(true)} className="btn btn-sun mt-5 w-full">
+              <button type="button" onClick={showMore} className="btn btn-sun mt-5 w-full">
                 {t.gallery.more}
                 <ChevronDown className="h-4 w-4" />
               </button>
             )}
-            <Lightbox images={gallery} index={open} onClose={() => setOpen(null)} onIndex={setOpen} />
+            <Lightbox images={gallery.map((image) => image.src)} index={open} onClose={() => setOpen(null)} onIndex={setOpen} />
           </>
         )}
       </div>
