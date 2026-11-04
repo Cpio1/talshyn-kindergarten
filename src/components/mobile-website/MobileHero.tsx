@@ -40,7 +40,7 @@ export function MobileHero() {
           {t.hero.subtitle}
         </motion.p>
 
-        {/* photo: wide and short, so the text stays in view */}
+        {/* photo: shown whole, at its own proportions */}
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -49,17 +49,21 @@ export function MobileHero() {
         >
           <div className="blob-b absolute -bottom-2.5 -right-2 h-3/4 w-3/5 bg-leaf" />
           <div className="absolute -left-2 -top-3 h-14 w-14 rounded-full bg-sun" />
-          <div className="relative aspect-[4/3] max-h-[19rem] w-full overflow-hidden rounded-[2rem_2rem_2rem_0.9rem] bg-sand shadow-lift ring-4 ring-milk">
-            <HeroPhoto sizes="(max-width: 767px) 92vw, 1px" media="(max-width: 767px)" />
+          <Leaf className="absolute -right-1 -top-5 h-8 w-8 rotate-45 text-leaf" />
+          <div className="relative">
+            <HeroPhoto
+              sizes="(max-width: 767px) 92vw, 1px"
+              media="(max-width: 767px)"
+              frame="rounded-[1.25rem] p-1.5"
+            />
           </div>
-          <div className="absolute -bottom-4 left-3 flex items-center gap-2 rounded-xl bg-white px-2.5 py-1.5 shadow-lift">
+          <div className="relative ml-3 mt-2.5 flex w-fit items-center gap-2 rounded-xl bg-white px-2.5 py-1.5 shadow-lift">
             <Clock className="h-4 w-4 text-leaf" aria-hidden="true" />
             <span className="text-[0.8rem] font-extrabold text-forest">{site.hours.display}</span>
           </div>
-          <Leaf className="absolute -right-1 -top-3 h-8 w-8 rotate-45 text-leaf" />
         </motion.div>
 
-        <motion.p {...rise(0.2)} className="mt-8 text-[0.975rem] leading-relaxed text-ink-soft">
+        <motion.p {...rise(0.2)} className="mt-6 text-[0.975rem] leading-relaxed text-ink-soft">
           {t.hero.description}
         </motion.p>
 

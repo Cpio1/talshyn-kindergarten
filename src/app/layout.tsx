@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     description: kk.meta.description,
     locale: "kk_KZ",
     alternateLocale: ["ru_RU"],
-    images: media.mainPage ? [{ url: media.mainPage, alt: kk.hero.illustration }] : undefined,
+    images: media.mainPage ? [{ url: media.mainPage.src, alt: kk.hero.illustration }] : undefined,
   },
   twitter: { card: media.mainPage ? "summary_large_image" : "summary" },
   formatDetection: { telephone: false },

@@ -15,7 +15,7 @@ export type LogoAsset = ImageAsset;
 
 export type SiteMedia = {
   logo: LogoAsset | null;
-  mainPage: string | null;
+  mainPage: ImageAsset | null;
   aboutMedia:
     | { kind: "image"; src: string }
     | { kind: "video"; sources: { src: string; type: string }[]; poster: string | null }
@@ -102,5 +102,5 @@ export function getSiteMedia(): SiteMedia {
     .map((f) => readAsset(f.file))
     .filter((asset): asset is ImageAsset => asset !== null);
 
-  return { logo: readLogo(files), mainPage: mainPage ? url(mainPage) : null, aboutMedia, gallery };
+  return { logo: readLogo(files), mainPage: mainPage ? readAsset(mainPage) : null, aboutMedia, gallery };
 }

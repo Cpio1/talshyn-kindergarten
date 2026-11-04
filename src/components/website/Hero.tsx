@@ -25,7 +25,7 @@ export function Hero() {
       <div className="blob-a pointer-events-none absolute -left-40 top-24 h-[26rem] w-[26rem] bg-leaf-wash/70" />
       <div className="pointer-events-none absolute -right-24 -top-24 h-[30rem] w-[30rem] rounded-full bg-sun-wash/70" />
 
-      <div className="container-site relative grid items-center gap-10 md:grid-cols-[1.08fr_0.92fr] lg:gap-14">
+      <div className="container-site relative grid items-center gap-10 md:grid-cols-2 lg:gap-14">
         <div className="relative z-[1]">
           <motion.p
             {...rise(0)}
@@ -89,24 +89,28 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
-          className="relative mx-auto w-full max-w-[30rem]"
+          className="relative mx-auto w-full max-w-[34rem]"
         >
           <div className="blob-b absolute -bottom-5 -left-6 h-[68%] w-[70%] bg-leaf" />
           <div className="absolute -right-4 -top-5 h-28 w-28 rounded-full bg-sun lg:h-32 lg:w-32" />
-          <WillowBranch className="animate-sway absolute -left-12 -top-14 z-[2] h-48 w-28 origin-top text-forest lg:-left-16 lg:h-56 lg:w-32" />
+          <WillowBranch className="animate-sway absolute -left-10 -top-24 h-48 w-28 origin-top text-forest lg:-left-12 lg:-top-32 lg:h-56 lg:w-32" />
 
-          <div className="blob-a group relative z-[1] aspect-[5/5.6] max-h-[34rem] overflow-hidden bg-sand shadow-lift ring-[6px] ring-milk">
-            <HeroPhoto sizes="(max-width: 767px) 1px, (min-width: 1280px) 480px, 42vw" media="(min-width: 768px)" />
+          <div className="relative z-[1]">
+            <HeroPhoto
+              sizes="(max-width: 767px) 1px, (min-width: 1280px) 540px, 46vw"
+              media="(min-width: 768px)"
+              frame="rounded-[1.75rem] p-2.5"
+            />
           </div>
 
-          <Daisy className="absolute -right-3 bottom-16 z-[2] h-12 w-12 drop-shadow-sm" />
-          <Leaf className="absolute -bottom-4 right-16 z-[2] h-10 w-10 -rotate-12 text-sun" />
+          <Daisy className="absolute -bottom-7 right-2 h-12 w-12 drop-shadow-sm" />
+          <Leaf className="absolute -bottom-9 right-16 h-10 w-10 -rotate-12 text-sun" />
 
           <motion.div
             initial={{ opacity: 0, x: 18 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.7, ease: EASE }}
-            className="absolute -left-5 bottom-10 z-[3] flex items-center gap-2.5 rounded-2xl bg-white px-3.5 py-2.5 shadow-lift lg:-left-10"
+            className="relative z-[2] ml-4 mt-4 flex w-fit items-center gap-2.5 rounded-2xl bg-white px-3.5 py-2.5 shadow-lift"
           >
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-sun-wash text-forest">
               <Clock className="h-4.5 w-4.5" aria-hidden="true" />
