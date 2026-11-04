@@ -20,11 +20,8 @@ export const site = {
     closes: "18:15",
     display: "07:45–18:15",
   },
-  /**
-   * Google Drive folder with the documents.
-   * While it is `null`, the Documents section shows «Жақында қолжетімді болады».
-   */
-  documentsUrl: null as string | null,
+  /** Google Drive folder opened by the button in the Documents section. */
+  documentsUrl: "https://drive.google.com/drive/folders/1XcsTkmsm73_9f6YpU0Z8lSzZN9sZAx47",
   /**
    * Set to true if public/images/logo.* already contains the word «Талшын»,
    * so the header does not repeat the name next to it.

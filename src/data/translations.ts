@@ -68,7 +68,7 @@ export type Dictionary = {
     next: string;
     counter: (n: number, total: number) => string;
   };
-  documents: { title: string; text: string; view: string; soon: string };
+  documents: { title: string; text: string; view: string };
   contacts: {
     title: string;
     text: string;
@@ -250,7 +250,6 @@ const kk: Dictionary = {
     title: "Құжаттар",
     text: "Балабақшаға қатысты құжаттармен осы бөлімде таныса аласыз.",
     view: "Құжаттарды қарау",
-    soon: "Жақында қолжетімді болады",
   },
   contacts: {
     title: "Бізбен байланысыңыз",
@@ -462,7 +461,6 @@ const ru: Dictionary = {
     title: "Документы",
     text: "В этом разделе можно ознакомиться с документами детского сада.",
     view: "Посмотреть документы",
-    soon: "Скоро будет доступно",
   },
   contacts: {
     title: "Свяжитесь с нами",

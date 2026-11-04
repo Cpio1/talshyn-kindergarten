@@ -10,8 +10,8 @@ export function Documents() {
   const { t } = useLanguage();
   return (
     <div className="container-site py-10 lg:py-14">
-      <Reveal className="relative mx-auto flex max-w-[56rem] items-center gap-8 overflow-hidden rounded-[2.5rem_2.5rem_2.5rem_1rem] bg-sun-wash px-10 py-9">
-        <span aria-hidden="true" className="blob-a absolute -right-14 -top-16 h-48 w-48 bg-sun/25" />
+      <Reveal className="relative mx-auto flex max-w-[56rem] items-center gap-8 overflow-hidden rounded-[2.5rem_2.5rem_2.5rem_1rem] bg-leaf-wash px-10 py-9">
+        <span aria-hidden="true" className="blob-a absolute -right-14 -top-16 h-48 w-48 bg-leaf/15" />
         <Leaf className="absolute bottom-4 right-[38%] h-8 w-8 rotate-[160deg] text-leaf/40" />
         <span className="blob-b relative grid h-24 w-24 shrink-0 place-items-center bg-white shadow-soft">
           <FolderOpen className="h-11 w-11 text-forest" strokeWidth={1.75} aria-hidden="true" />
