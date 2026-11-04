@@ -1,0 +1,201 @@
+@import "tailwindcss";
+
+@theme {
+  --color-leaf: #56836b;
+  --color-forest: #345c49;
+  --color-sun: #e8b85e;
+  --color-milk: #fff9ed;
+  --color-sand: #f3e9d7;
+  --color-ink: #263d32;
+  --color-ink-soft: #4a6155;
+
+  /* Tints mixed from the base palette, for card and section washes */
+  --color-sun-wash: #fbeecf;
+  --color-leaf-wash: #e2eddf;
+  --color-peach-wash: #f8e3cb;
+
+  --font-display: var(--font-vollkorn), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-nunito), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+
+  --shadow-soft: 0 10px 30px -14px rgb(52 92 73 / 0.28);
+  --shadow-lift: 0 18px 40px -18px rgb(52 92 73 / 0.42);
+
+  --animate-spin-slow: spin 38s linear infinite;
+  --animate-sway: sway 7s ease-in-out infinite;
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-1.6deg);
+  }
+  50% {
+    transform: rotate(1.6deg);
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Set by an inline script for returning Russian-language visitors, until React applies the language. */
+  html[data-lang-pending] body {
+    visibility: hidden;
+  }
+
+  body {
+    background: var(--color-milk);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Anchored sections line up just below the fixed header */
+  section[id] {
+    scroll-margin-top: 4.25rem;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 650;
+    line-height: 1.14;
+    letter-spacing: -0.012em;
+    color: var(--color-ink);
+    overflow-wrap: break-word;
+    text-wrap: balance;
+    font-variant-numeric: lining-nums;
+  }
+
+  .font-display {
+    font-variant-numeric: lining-nums;
+  }
+
+  :focus-visible {
+    outline: 2.5px solid var(--color-forest);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  .on-dark :focus-visible {
+    outline-color: var(--color-sun);
+  }
+}
+
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 3.5vw, 2rem);
+  }
+
+  .btn {
+    display: inline-flex;
+    min-height: 2.875rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    padding: 0.6rem 1.35rem;
+    font-size: 0.9375rem;
+    font-weight: 800;
+    line-height: 1.2;
+    text-align: center;
+    transition:
+      transform 0.2s ease,
+      background-color 0.2s ease,
+      color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+  }
+
+  @media (hover: hover) {
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+    .btn-primary:hover {
+      background: #2a4c3c;
+      box-shadow: var(--shadow-lift);
+    }
+    .btn-sun:hover {
+      background: #eec26f;
+      box-shadow: var(--shadow-lift);
+    }
+    .btn-ghost:hover {
+      background: var(--color-sand);
+    }
+    .btn-ghost-dark:hover {
+      background: rgb(255 255 255 / 0.14);
+    }
+  }
+
+  .btn-primary {
+    background: var(--color-forest);
+    color: #fff;
+  }
+
+  .btn-sun {
+    background: var(--color-sun);
+    color: var(--color-ink);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-forest);
+    box-shadow: inset 0 0 0 1.5px var(--color-forest);
+  }
+
+  .btn-ghost-dark {
+    background: transparent;
+    color: #fff;
+    box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 0.65);
+  }
+
+  .blob-a {
+    border-radius: 58% 42% 47% 53% / 50% 44% 56% 50%;
+  }
+
+  .blob-b {
+    border-radius: 44% 56% 55% 45% / 58% 46% 54% 42%;
+  }
+
+  .blob-c {
+    border-radius: 52% 48% 40% 60% / 42% 58% 42% 58%;
+  }
+}
+
+/* Photos zoom gently on hover; kept in CSS so it stays off the JS thread */
+.zoom-media {
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (hover: hover) {
+  .group:hover .zoom-media,
+  .group:focus-visible .zoom-media {
+    transform: scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
